@@ -26,7 +26,7 @@ export PATH="${protoc_dir}/bin:${PATH}"
 if [[ "$system_name" == "Linux" ]]; then
   ln -sf "${protoc_dir}/bin/protoc" /usr/local/bin/protoc
 fi
-if [[ -n "${GITHUB_PATH:-}" ]]; then
+if [[ "$system_name" == "Darwin" && -n "${GITHUB_PATH:-}" ]]; then
   printf '%s\n' "${protoc_dir}/bin" >> "$GITHUB_PATH"
 fi
 
