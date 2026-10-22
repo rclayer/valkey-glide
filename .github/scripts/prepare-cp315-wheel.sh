@@ -4,8 +4,12 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$repo_root"
 export GLIDE_VERSION=2.5.3
+export CARGO_PROFILE_RELEASE_STRIP=none
 
-protoc_version=36.2
+# Keep generated code and the supported Python runtime floor aligned. Protoc
+# 33.6 emits code requiring protobuf 6.33.6, which is the minimum version
+# declared by the GLIDE packages.
+protoc_version=33.6
 system_name="$(uname -s)"
 machine="$(uname -m)"
 case "$system_name/$machine" in

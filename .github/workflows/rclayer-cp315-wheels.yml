@@ -27,6 +27,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     env:
       PROTOC: /tmp/valkey-glide-cp315/local/bin/protoc
+      CARGO_PROFILE_RELEASE_STRIP: none
     steps:
       - uses: actions/checkout@v6.0.2
         with:
@@ -52,8 +53,8 @@ jobs:
 
       - name: Check wheel imports
         run: |
-          python -m pip install dist/*.whl
-          python -c "import glide; import glide_shared._fast_response; print(glide.__file__)"
+          python -m pip install "protobuf==6.33.6" dist/*.whl
+          python -c "import glide; import glide_shared._fast_response; from glide_shared.protobuf import connection_request_pb2; print(glide.__file__)"
 
       - uses: actions/upload-artifact@v7.0.1
         with:
